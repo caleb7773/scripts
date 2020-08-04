@@ -1,8 +1,17 @@
 #!/bin/bash
-cd /opt/site-to-site/tree/easy-rsa/easyrsa3/
+cd /opt/easy-rsa/easyrsa3/
+read -p "What is the client CN : " commonname
+./easyrsa build-client-full $commonname nopass
+mkdir /tmp/$commonname
+./easyrsa gen-crl 
+cp pki/crl.pem /tmp/$commonname/
+sed -i 1,3d /tmp/$commonname/crl.pem
+echo "</tls-crypt>" | sudo tee -a /tmp/$commonname/crl.pem
 ######################################################
 #You need to remove the top 64 lines in a client cert#
 ######################################################
+
+
 sed -i 1,64d pki/issued/$commonname.crt
 sed -i '1s;^;<cert>\n;' pki/issued/$commonname.crt
 sudo tee -a pki/issued/$commonname.crt <<EOF
@@ -20,7 +29,7 @@ EOF
 cp pki/issued/$commonname.crt /tmp/$commonname/
 cp pki/private/$commonname.key /tmp/$commonname/
 cd /tmp/$commonname/
-cat ca.crt $commonname.crt $commonname.key > /tmp/$commonname/$commonname.inline
+cat ca.crt $commonname.crt $commonname.key crl.pem > /tmp/$commonname/$commonname.inline
 tar cvf $commonname.tar /tmp/$commonname/$commonname.inline
 rm /tmp/$commonname/$commonname.crt
 rm /tmp/$commonname/$commonname.key
