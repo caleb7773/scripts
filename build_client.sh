@@ -5,8 +5,12 @@ read -p "What is the client CN : " commonname
 mkdir /tmp/$commonname
 ./easyrsa gen-crl 
 cp pki/crl.pem /tmp/$commonname/
-sed -i 1,3d /tmp/$commonname/crl.pem
-echo "</tls-crypt>" | sudo tee -a /tmp/$commonname/crl.pem
+openvpn --genkey --secret ta.key
+echo "<tls-crypt>" | sudo tee ./ta.inline.key
+sed -i 1,3d ./ta.key
+echo "</tls-crypt>" | sudo tee -a /tmp/$commonname/ta.key
+cat ./ta.key | sudo tee -a ./ta.inline.key
+mv ./ta.inline.key /tmp/$commonname/ta.key
 ######################################################
 #You need to remove the top 64 lines in a client cert#
 ######################################################
@@ -29,11 +33,13 @@ EOF
 cp pki/issued/$commonname.crt /tmp/$commonname/
 cp pki/private/$commonname.key /tmp/$commonname/
 cd /tmp/$commonname/
-cat ca.crt $commonname.crt $commonname.key crl.pem > /tmp/$commonname/$commonname.inline
-tar cvf $commonname.tar /tmp/$commonname/$commonname.inline
+cat ca.crt $commonname.crt $commonname.key ta.key > /tmp/$commonname/$commonname.inline
+tar cvf $commonname.tar /tmp/$commonname/$commonname.inline /tmp/$commonname/crl.pem
 rm /tmp/$commonname/$commonname.crt
 rm /tmp/$commonname/$commonname.key
 rm /tmp/$commonname/ca.crt
+rm /tmp/$commonname/ta.key
+rm /tmp/$commonname/crl.pem
 clear
 echo ' '
 echo ' '
