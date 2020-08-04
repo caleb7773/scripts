@@ -3,6 +3,10 @@ cd /opt/easy-rsa/easyrsa3/
 read -p "What is the server CN : " commonname
 ./easyrsa build-server-full $commonname nopass
 mkdir /tmp/$commonname
+./easyrsa gen-crl 
+cp pki/crl.pem /tmp/$commonname/
+sed -i 1,3d /tmp/$commonname/crl.pem
+echo "</tls-crypt>" | sudo tee -a /tmp/$commonname/crl.pem
 ######################################################
 #You need to remove the top 66 lines in a server cert#
 ######################################################
@@ -23,7 +27,7 @@ EOF
 cp pki/issued/$commonname.crt /tmp/$commonname/
 cp pki/private/$commonname.key /tmp/$commonname/
 cd /tmp/$commonname/
-cat ca.crt $commonname.crt $commonname.key > /tmp/$commonname/$commonname.inline
+cat ca.crt $commonname.crt $commonname.key crl.pem > /tmp/$commonname/$commonname.inline
 tar cvf $commonname.tar /tmp/$commonname/$commonname.inline
 rm /tmp/$commonname/$commonname.crt
 rm /tmp/$commonname/$commonname.key
