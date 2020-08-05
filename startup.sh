@@ -42,14 +42,14 @@ username_check() {
 	done
 }
 password_input() {
-	echo "What password do you want to user for ${username}?"
+	echo "What password do you want to use for ${username}?"
 	read -sp "Enter password : " password
 	echo ' '
 	read -sp "Please confirm : " password2
 	echo ' '
 }
 password_check() {
-	while [ ${password:-1} != ${password2} ]
+	while [ ${password:-1} != ${password2:-2} ]
 	do 
 		echo "Your entries do not match!"
 		echo ' '
