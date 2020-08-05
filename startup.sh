@@ -149,6 +149,10 @@ sudo apt install fail2ban -y
 echo ' '
 echo ' Fail2Ban Installed!'
 enter_continue
+sudo apt install tmux -y
+echo ' '
+echo ' Tmux Installed!'
+enter_continue
 
 ##################################
 #Disables IPv6 routing on the box#
