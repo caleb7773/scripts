@@ -55,8 +55,9 @@ sudo iptables -I INPUT 1 -p udp -m udp --dport ${vpn_port} -m comment --comment 
 sudo systemctl start openvpn@${vpn_name}-server
 ip a
 echo ' '
-vpn_remote_ip=$(curl -s ipinfo.io)
+vpn_remote_ip=$(curl -s icanhazip.com)
 echo "Your remote IP is ${vpn_remote_ip}"
+echo "Your remote VPN Port is ${vpn_port}"
 
 echo "alias ${vpn_name}vpnon=\"sudo systemctl start openvpn@${vpn_name}-server\"" | tee -a ~/.bashrc
 echo "alias ${vpn_name}vpnoff=\"sudo systemctl stop openvpn@${vpn_name}-server\"" | tee -a ~/.bashrc
