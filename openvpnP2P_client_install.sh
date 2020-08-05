@@ -2,6 +2,7 @@
 
 read -p "What is your VPN Name? " vpn_name
 read -p "What is the remote IP? " vpn_remote_ip
+read -p "What port do you want to use for OpenVPN? " vpn_port
 
 sudo apt-get install openvpn
 
@@ -23,12 +24,14 @@ topology p2p
 #Either end of the tunnel must have an IP address, so we use ifconfig <local> <remote> to set them. These should be reversed from how they are set up in the server since the command is ifconfig local remote, not ifconfig server client.
 ifconfig 10.1.0.2 10.1.0.1
 #The client needs to know where to connect to find the server.
-remote ${vpn_remote_ip}
+remote ${vpn_remote_ip} vpn_port
 #Creating a log is useful for troubleshooting.
 log bear-client.log
 #use keepalives
 keepalive 10 60
 EOF
+
+sudo iptables -I OUTPUT 1 -p udp -m udp --dport ${vpn_port} -m comment --comment "Outgoing ${vpn_name} vpn traffic to ${vpn_remote_ip}" -j ACCEPT
 
 sudo systemctl start openvpn@${vpn_name}-client
 ip a
