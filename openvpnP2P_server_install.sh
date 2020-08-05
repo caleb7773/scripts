@@ -26,4 +26,4 @@ sudo systemctl start openvpn@${vpn_name}-server
 ip a
 echo ' '
 vpn_remote_ip=$(curl ipinfo.io)
-Your remote IP is ${vpn_remote_ip}
+echo "Your remote IP is ${vpn_remote_ip}"
