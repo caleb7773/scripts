@@ -7,6 +7,13 @@ sudo apt-get install openvpn
 
 sudo touch /etc/openvpn/${vpn_name}-client.conf
 
+#########################################################
+#########################################################
+###                                                   ###
+###          THIS IS YOUR CONFIG FILE EDIT IT!        ###
+###                                                   ###
+#########################################################
+#########################################################
 sudo tee /etc/openvpn/${vpn_name}-client.conf <<EOF
 #This directive creates a layer 3 (tun) OpenVPN tunnel
 dev-type tun
