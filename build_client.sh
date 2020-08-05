@@ -6,9 +6,10 @@ mkdir /tmp/$commonname
 ./easyrsa gen-crl 
 cp pki/crl.pem /tmp/$commonname/
 openvpn --genkey --secret ta.key
+touch ./ta.inline.key
 echo "<tls-crypt>" | sudo tee ./ta.inline.key
 sed -i 1,3d ./ta.key
-echo "</tls-crypt>" | sudo tee -a /tmp/$commonname/ta.key
+echo "</tls-crypt>" | sudo tee -a ./ta.key
 cat ./ta.key | sudo tee -a ./ta.inline.key
 mv ./ta.inline.key /tmp/$commonname/ta.key
 ######################################################
