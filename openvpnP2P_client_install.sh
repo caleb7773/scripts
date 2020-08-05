@@ -26,7 +26,7 @@ ifconfig 10.1.0.2 10.1.0.1
 #The client needs to know where to connect to find the server.
 remote ${vpn_remote_ip} vpn_port
 #Creating a log is useful for troubleshooting.
-log bear-client.log
+log ${vpn_name}-client.log
 #use keepalives
 keepalive 10 60
 EOF
