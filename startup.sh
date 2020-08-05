@@ -169,6 +169,7 @@ source ~/.bashrc
 #Changes the SSH port to 20022#
 ###############################
 sudo sed -i "s/#Port 22/Port ${ssh_port_num}/g" /etc/ssh/sshd_config
+sudo sed -i "s/#PermitRootLogin/PermitRootLogin/g" /etc/ssh/sshd_config
 sudo systemctl restart ssh
 #####################
 #Enable IPv4 Routing#
