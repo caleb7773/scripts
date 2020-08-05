@@ -28,6 +28,25 @@ log ${vpn_name}-server.log
 #By default, OpenVPN will shut down the tunnel after 2 minutes if no traffic is being passed through it. We can keep it open indefinitely with keepalive.
 #We are specifying that OpenVPN should ping the other side of the tunnel every 10 seconds and if a response isn't received after 60 seconds, restart the tunnel.
 keepalive 10 60
+#Dropping OpenVPN privileges
+user nobody
+group nogroup
+persist-key
+persist-tun
+#increase log size
+verb 4
+#limit the redundancy in the log
+mute 20
+#Switch to EC
+dh none
+#use lower encryption
+ncp-disable
+#encryption suite
+cipher AES-128-GCM
+#HMAC
+auth SHA256
+#Protocol Downgrade protection
+tls-cipher TLS-ECDHE-RSA-WITH-AES-256-GCM-SHA384
 EOF
 
 
