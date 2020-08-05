@@ -39,6 +39,7 @@ ip a
 
 echo "alias ${vpn_name}vpnon=\"sudo systemctl start openvpn@${vpn_name}-client\"" | tee -a ~/.bashrc
 echo "alias ${vpn_name}vpnoff=\"sudo systemctl stop openvpn@${vpn_name}-client\"" | tee -a ~/.bashrc
+source ~/.bashrc
 echo "You have created the aliases"
 echo "${vpn_name}vpnon which will turn on your ${vpn_name} VPN"
 echo "${vpn_name}vpnoff which will turn off your ${vpn_name} VPN"
