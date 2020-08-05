@@ -29,6 +29,25 @@ remote ${vpn_remote_ip} vpn_port
 log ${vpn_name}-client.log
 #use keepalives
 keepalive 10 60
+#Dropping OpenVPN privileges
+user nobody
+group nogroup
+persist-key
+persist-tun
+#increase log size
+verb 4
+#limit the redundancy in the log
+mute 20
+#Switch to EC
+dh none
+#use lower encryption
+ncp-disable
+#encryption suite
+cipher AES-128-GCM
+#HMAC
+auth SHA256
+#Protocol Downgrade protection
+tls-cipher TLS-ECDHE-RSA-WITH-AES-256-GCM-SHA384
 EOF
 
 sudo iptables -I OUTPUT 1 -p udp -m udp --dport ${vpn_port} -m comment --comment "Outgoing ${vpn_name} vpn traffic to ${vpn_remote_ip}" -j ACCEPT
