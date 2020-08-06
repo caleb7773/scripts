@@ -165,9 +165,9 @@ sudo update-grub
 ################################################
 echo 'export PS1="\[$(tput setaf 3; tput bold; tput rev)\]\u@\h:\w\$\[$(tput sgr0)\] "' >> ~/.bashrc
 source ~/.bashrc
-###############################
-#Changes the SSH port to 20022#
-###############################
+#####################################
+#Changes the SSH port to custom port#
+#####################################
 sudo sed -i "s/#Port 22/Port ${ssh_port_num}/g" /etc/ssh/sshd_config
 sudo sed -i "s/#PermitRootLogin/PermitRootLogin/g" /etc/ssh/sshd_config
 sudo systemctl restart ssh
