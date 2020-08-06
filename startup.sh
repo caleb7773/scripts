@@ -254,7 +254,7 @@ echo ' '
 #Builds AIDE databse and moves it#
 ##################################
 sudo aideinit
-sudo mv /var/lib/aide/aide.db.nw /var/lib/aide/aide.db
+sudo mv /var/lib/aide/aide.db.new /var/lib/aide/aide.db
 echo ' '
 echo 'You are now secure!'
 echo ' '
