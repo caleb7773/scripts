@@ -165,6 +165,7 @@ sudo update-grub
 ################################################
 echo 'export PS1="\[$(tput setaf 3; tput bold; tput rev)\]\u@\h:\w\$\[$(tput sgr0)\] "' >> ~/.bashrc
 source ~/.bashrc
+sudo cp /home/student1/.bashrc /home/${username}/.bashrc
 #####################################
 #Changes the SSH port to custom port#
 #####################################
