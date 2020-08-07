@@ -1,0 +1,36 @@
+Sitting in Day 1 Installing Linux
+
+
+Edit /etc/crypttab.
+
+sudo vim /etc/crypttab
+
+Add a line under the dm_crypt-0 line, then save the file.
+
+dm_crypt-0 UUID=12345678-90ab-cdef-0123-4567890abcde none luks
+crypt_swap /swap.img /dev/urandom swap
+
+Edit /etc/fstab.
+
+sudo vim /etc/fstab
+
+Comment out the line beginning with /swap.img and add /dev/mapper/crypt_swap none swap sw 0 0 below it.
+
+#/swap.img         none    swap    sw       0       0
+/dev/mapper/crypt_swap none swap sw 0 0
+
+Reboot. Enter the passphrase when required and login.
+
+Confirm the encrypted swap is working.  The lsblk command should show a loopX device with crypt_swap attached to it under NAME and the MOUNTPOINT column should have [SWAP] next to crypt_swap.
+
+
+
+Checking it another way:
+ls /dev/mapper
+
+You should now see "ubuntu--vg-ubuntu--lv" file
+
+swapon -s
+
+should see "/dev/dm-2"
+If you see "/dev/swap" you've done it wrong

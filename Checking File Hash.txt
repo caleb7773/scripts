@@ -1,0 +1,10 @@
+get-filehash .\ubuntu-20.04-desktop-amd64.iso -Algorithm SHA256 | Format-List
+
+Algorithm : SHA256
+Hash      : E5B72E9CFE20988991C9CD87BDE43C0B691E3B67B01F76D23F8150615883CE11
+Path      : C:\Users\student1.WINDOWS-8H0SK45\Downloads\ubuntu-20.04-desktop-amd64.iso
+
+
+Select-String -Pattern 'E5B72E9CFE20988991C9CD87BDE43C0B691E3B67B01F76D23F8150615883CE11' -Path .\SHA256SUMS
+
+SHA256SUMS:5:e5b72e9cfe20988991c9cd87bde43c0b691e3b67b01f76d23f8150615883ce11 *ubuntu-20.04-desktop-amd64.iso
